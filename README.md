@@ -1,36 +1,36 @@
-#Closed-Shell Hartree-Fock & MP2 Energy Calculator
+# Closed-Shell Hartree-Fock & MP2 Energy Calculator
+
 C program for computing the closed-shell restricted Hartree-Fock (RHF) energy and the second-order Møller–Plesset (MP2) correlation energy from the data stored in TREXIO format.
 
-##Overview
+## Overview
 
-The program reads pre-computed molecular orbital (MO) integrals and orbital energies from a TREXIO file (.h5) and performs the following steps:
+The program reads pre-computed molecular orbital (MO) integrals and orbital energies from a TREXIO file (`.h5`) and performs the following steps:
 
-Data Extraction: Reads the nuclear repulsion energy ($E_{NN}$), number of spin-up electrons ($N_{\text{occ}}$), total number of molecular orbitals ($N_{\text{MO}}$), canonical orbital energies ($\epsilon_p$), one-electron core Hamiltonian matrix elements ($\langle i \vert{} h \vert{} i \rangle$), and sparse two-electron repulsion integrals ($\langle ij \vert{} kl \rangle$).
+1. **Data Extraction:** Reads the nuclear repulsion energy ($E_{NN}$), number of spin-up electrons ($N_{\text{occ}}$), total number of molecular orbitals ($N_{\text{MO}}$), canonical orbital energies ($\epsilon_p$), one-electron core Hamiltonian matrix elements ($\langle i | h | i \rangle$), and sparse two-electron repulsion integrals ($\langle ij | kl \rangle$).
+2. **Symmetry Expansion:** Unpacks the sparse two-electron integrals in physicist's notation into a dense 4D tensor by applying 8-fold permutational symmetry:
+   $$\langle ij|kl\rangle = \langle il|kj\rangle = \langle kl|ij\rangle = \langle kj|il\rangle = \langle ji|lk\rangle = \langle li|jk\rangle = \langle lk|ji\rangle = \langle jk|li\rangle$$
+3. **Hartree-Fock Energy:** Evaluates the closed-shell spatial-orbital RHF energy:
+   $$E_{\text{HF}} = E_{NN} + 2\sum_{i=1}^{N_{\text{occ}}} \langle i|h|i\rangle + \sum_{i=1}^{N_{\text{occ}}}\sum_{j=1}^{N_{\text{occ}}} \left[ 2\langle ij|ij\rangle - \langle ij|ji\rangle \right]$$
+4. **MP2 Correlation Energy:** Computes the second-order perturbation energy correction using canonical Fock eigenvalues:
+   $$E_{\text{MP2}} = \sum_{i,j \in \text{occ}} \sum_{a,b \in \text{virt}} \frac{\langle ij|ab\rangle \left(2\langle ij|ab\rangle - \langle ij|ba\rangle\right)}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b}$$
 
-Symmetry Expansion: Unpacks the sparse two-electron integrals in physicist's notation into a dense 4D tensor by applying 8-fold permutational symmetry:
-$$\langle ij\vert{}kl\rangle = \langle il\vert{}kj\rangle = \langle kl\vert{}ij\rangle = \langle kj\vert{}il\rangle = \langle ji\vert{}lk\rangle = \langle li\vert{}jk\rangle = \langle lk\vert{}ji\rangle = \langle jk\vert{}li\rangle$$
+## Repository Structure
 
-Computes Hartree-Fock Energy:
-
-$$E_{\text{HF}} = E_{NN} + 2\sum_{i=1}^{N_{\text{occ}}} \langle i\vert{}h\vert{}i\rangle + \sum_{i=1}^{N_{\text{occ}}}\sum_{j=1}^{N_{\text{occ}}} \left[ 2\langle ij\vert{}ij\rangle - \langle ij\vert{}ji\rangle \right]$$
-
-Computes MP2 Correlation Energy: 
-
-$$E_{\text{MP2}} = \sum_{i,j \in \text{occ}} \sum_{a,b \in \text{virt}} \frac{\langle ij\vert{}ab\rangle \left(2\langle ij\vert{}ab\rangle - \langle ij\vert{}ba\rangle\right)}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b}$$
-
-##Repository Structure
-
+```text
+.
 ├── AUTHORS          # List of project contributors
-├── INSTALL.md       # Compilation
+├── INSTALL.md       # Dependency setup, compilation, and execution instructions
 ├── LICENSE          # Project license information
-├── README.md        # Project summary and benchmark results
+├── README.md        # Project summary, theory overview, and benchmark results
 ├── data/            # Sample TREXIO molecular input files
-├── src/             # C source code 
-└── tests/           # Validation tests
+├── doc/             # Additional theoretical or implementation documentation
+├── src/             # C source code (mp2.c)
+└── tests/           # Automated validation tests
+```
 
-##Computed Benchmark Results
+## Computed Benchmark Results
 
-The table below summarizes the Hartree-Fock and MP2 energies obtained across the tested systems (energies reported in Hartree atomic units, $\text{a.u.}$):
+The table below summarizes the Hartree-Fock and MP2 energies obtained across the tested closed-shell molecular systems (energies reported in Hartree atomic units, $\text{a.u.}$):
 
 | System ($N_{\text{occ}} / N_{\text{MO}}$) | Total MOs ($N_{\text{MO}}$) | Occupied MOs ($N_{\text{occ}}$) | Hartree-Fock Energy (a.u.) | MP2 Correlation Energy (a.u.) | Total MP2 Energy (a.u.) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -41,5 +41,10 @@ The table below summarizes the Hartree-Fock and MP2 energies obtained across the
 | System 5 ($\text{CH}_3\text{OH}$) | 48 | 9 | `-115.0484158187` | `-0.3430913311` | `-115.3915071498` |
 | System 6 ($\text{CO}_2$) | 42 | 11 | `-187.6507108848` | `-0.4886746075` | `-188.1393854923` |
 
+## Usage
 
+After building the executable (see `INSTALL.md`), run the program by passing the path to a TREXIO file as a command-line argument:
 
+```bash
+./mp2 data/h2o.h5
+```
