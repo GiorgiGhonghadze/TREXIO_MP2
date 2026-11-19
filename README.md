@@ -2,7 +2,11 @@
 
 C program for computing the closed-shell restricted Hartree-Fock (RHF) energy and the second-order Møller–Plesset (MP2) correlation energy from the data stored in TREXIO format.
 
+<div align="center">
+
 [Overview](#overview) • [Compilation](INSTALL.md) • [Authors](AUTHORS)
+
+</div>
 
 ## Overview
 
