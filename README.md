@@ -1,6 +1,7 @@
-Closed-Shell Hartree-Fock & MP2 Energy CalculatorA C program for computing the closed-shell restricted Hartree-Fock (RHF) energy and the second-order Møller–Plesset (MP2) correlation energy from the data stored in TREXIO format.
+#Closed-Shell Hartree-Fock & MP2 Energy Calculator
+C program for computing the closed-shell restricted Hartree-Fock (RHF) energy and the second-order Møller–Plesset (MP2) correlation energy from the data stored in TREXIO format.
 
-Overview
+##Overview
 
 The program reads pre-computed molecular orbital (MO) integrals and orbital energies from a TREXIO file (.h5) and performs the following steps:
 
@@ -17,7 +18,7 @@ Computes MP2 Correlation Energy:
 
 $$E_{\text{MP2}} = \sum_{i,j \in \text{occ}} \sum_{a,b \in \text{virt}} \frac{\langle ij\vert{}ab\rangle \left(2\langle ij\vert{}ab\rangle - \langle ij\vert{}ba\rangle\right)}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b}$$
 
-Repository Structure
+##Repository Structure
 
 ├── AUTHORS          # List of project contributors
 ├── INSTALL.md       # Compilation
@@ -27,7 +28,7 @@ Repository Structure
 ├── src/             # C source code 
 └── tests/           # Validation tests
 
-Computed Benchmark Results
+##Computed Benchmark Results
 
 The table below summarizes the Hartree-Fock and MP2 energies obtained across the tested systems (energies reported in Hartree atomic units, $\text{a.u.}$):
 
