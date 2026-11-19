@@ -31,6 +31,14 @@ Computed Benchmark Results
 
 The table below summarizes the Hartree-Fock and MP2 energies obtained across the tested systems (energies reported in Hartree atomic units, $\text{a.u.}$):
 
-System (Nocc​/NMO​)Total MOs (NMO​)Occupied MOs (Nocc​)Hartree-Fock Energy (a.u.)MP2 Correlation Energy (a.u.)Total MP2 Energy (a.u.)System 1 ($\text{H}_2\text{O}$)245-76.0267987082-0.2039599741-76.2307586823System 2 ($\text{CH}_4$)345-40.1986733443-0.1640072951-40.3626806394System 3 ($\text{HCN}$)337-92.8829467012-0.2892753290-93.1722220301System 4 ($\text{C}_2\text{H}_2$)387-76.8257783991-0.2600944278-77.0858728269System 5 ($\text{CH}_3\text{OH}$)489-115.0484158187-0.3430913311-115.3915071498System 6 ($\text{CO}_2$)4211-187.6507108848-0.4886746075-188.1393854923
+| System ($N_{\text{occ}} / N_{\text{MO}}$) | Total MOs ($N_{\text{MO}}$) | Occupied MOs ($N_{\text{occ}}$) | Hartree-Fock Energy (a.u.) | MP2 Correlation Energy (a.u.) | Total MP2 Energy (a.u.) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| System 1 ($\text{H}_2\text{O}$) | 24 | 5 | `-76.0267987082` | `-0.2039599741` | `-76.2307586823` |
+| System 2 ($\text{CH}_4$) | 34 | 5 | `-40.1986733443` | `-0.1640072951` | `-40.3626806394` |
+| System 3 ($\text{HCN}$) | 33 | 7 | `-92.8829467012` | `-0.2892753290` | `-93.1722220301` |
+| System 4 ($\text{C}_2\text{H}_2$) | 38 | 7 | `-76.8257783991` | `-0.2600944278` | `-77.0858728269` |
+| System 5 ($\text{CH}_3\text{OH}$) | 48 | 9 | `-115.0484158187` | `-0.3430913311` | `-115.3915071498` |
+| System 6 ($\text{CO}_2$) | 42 | 11 | `-187.6507108848` | `-0.4886746075` | `-188.1393854923` |
+
 
 
