@@ -4,16 +4,19 @@ C program for computing the closed-shell restricted Hartree-Fock (RHF) energy an
 
 ## Overview
 
-The program reads pre-computed molecular orbital (MO) integrals and orbital energies from a TREXIO file (`.h5`) and performs the following steps:
+The program reads precomputed molecular orbital (MO) integrals and orbital energies from a TREXIO file (`.h5`) and performs the following steps:
 
-1. **Data Extraction:** Reads the nuclear repulsion energy ($E_{NN}$), number of spin-up electrons ($N_{\text{occ}}$), total number of molecular orbitals ($N_{\text{MO}}$), canonical orbital energies ($\epsilon_p$), one-electron core Hamiltonian matrix elements ($\langle i | h | i \rangle$), and sparse two-electron repulsion integrals ($\langle ij | kl \rangle$).
-2. **Symmetry Expansion:** Unpacks the sparse two-electron integrals in physicist's notation into a dense 4D tensor by applying 8-fold permutational symmetry:
-   $$\langle ij|kl\rangle = \langle il|kj\rangle = \langle kl|ij\rangle = \langle kj|il\rangle = \langle ji|lk\rangle = \langle li|jk\rangle = \langle lk|ji\rangle = \langle jk|li\rangle$$
-3. **Hartree-Fock Energy:** Evaluates the closed-shell spatial-orbital RHF energy:
+1. **Data Extraction:** Reads the nuclear repulsion energy ($E_{NN}$), number of spin-up electrons ($N_{\text{occ}}$), total number of molecular orbitals ($N_{\text{MO}}$), orbital energies ($\epsilon_p$), one-electron Hamiltonian matrix elements ($\langle i | h | i \rangle$), and sparse two-electron repulsion integrals ($\langle ij | kl \rangle$).
+
+2. **Symmetry Expansion:** Unpacks the sparse two-electron integrals into a flattened array by applying 8-fold permutational symmetry:
+
+$$\langle ij|kl\rangle = \langle il|kj\rangle = \langle kl|ij\rangle = \langle kj|il\rangle = \langle ji|lk\rangle = \langle li|jk\rangle = \langle lk|ji\rangle = \langle jk|li\rangle$$
+
+4. **Computes Hartree-Fock Energy:** 
 
 $$E_{\text{HF}} = E_{NN} + 2\sum_{i=1}^{N_{\text{occ}}} \langle i|h|i\rangle + \sum_{i=1}^{N_{\text{occ}}}\sum_{j=1}^{N_{\text{occ}}} \left[ 2\langle ij|ij\rangle - \langle ij|ji\rangle \right]$$
    
-5. **MP2 Correlation Energy:** Computes the second-order perturbation energy correction using canonical Fock eigenvalues:
+5. **Computes MP2 Correlation Energy:**
 
 $$E_{\text{MP2}} = \sum_{i,j \in \text{occ}} \sum_{a,b \in \text{virt}} \frac{\langle ij|ab\rangle \left(2\langle ij|ab\rangle - \langle ij|ba\rangle\right)}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b}$$
 
@@ -34,19 +37,14 @@ $$E_{\text{MP2}} = \sum_{i,j \in \text{occ}} \sum_{a,b \in \text{virt}} \frac{\l
 
 The table below summarizes the Hartree-Fock and MP2 energies obtained across the tested closed-shell molecular systems (energies reported in Hartree atomic units, $\text{a.u.}$):
 
-| System ($N_{\text{occ}} / N_{\text{MO}}$) | Total MOs ($N_{\text{MO}}$) | Occupied MOs ($N_{\text{occ}}$) | Hartree-Fock Energy (a.u.) | MP2 Correlation Energy (a.u.) | Total MP2 Energy (a.u.) |
+| Compound | Total MOs | Occupied MOs | Hartree-Fock Energy (a.u.) | MP2 Correlation Energy (a.u.) | Total MP2 Energy (a.u.) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| System 1 ($\text{H}_2\text{O}$) | 24 | 5 | `-76.0267987082` | `-0.2039599741` | `-76.2307586823` |
-| System 2 ($\text{CH}_4$) | 34 | 5 | `-40.1986733443` | `-0.1640072951` | `-40.3626806394` |
-| System 3 ($\text{HCN}$) | 33 | 7 | `-92.8829467012` | `-0.2892753290` | `-93.1722220301` |
-| System 4 ($\text{C}_2\text{H}_2$) | 38 | 7 | `-76.8257783991` | `-0.2600944278` | `-77.0858728269` |
-| System 5 ($\text{CH}_3\text{OH}$) | 48 | 9 | `-115.0484158187` | `-0.3430913311` | `-115.3915071498` |
-| System 6 ($\text{CO}_2$) | 42 | 11 | `-187.6507108848` | `-0.4886746075` | `-188.1393854923` |
+| $\text{H}_2\text{O}$ | 24 | 5 | `-76.0267987082` | `-0.2039599741` | `-76.2307586823` |
+| $\text{CH}_4$ | 34 | 5 | `-40.1986733443` | `-0.1640072951` | `-40.3626806394` |
+| $\text{HCN}$ | 33 | 7 | `-92.8829467012` | `-0.2892753290` | `-93.1722220301` |
+| $\text{C}_2\text{H}_2$ | 38 | 7 | `-76.8257783991` | `-0.2600944278` | `-77.0858728269` |
+| $\text{CH}_3\text{OH}$ | 48 | 9 | `-115.0484158187` | `-0.3430913311` | `-115.3915071498` |
+| $\text{CO}_2$ | 42 | 11 | `-187.6507108848` | `-0.4886746075` | `-188.1393854923` |
 
-## Usage
 
-After building the executable (see `INSTALL.md`), run the program by passing the path to a TREXIO file as a command-line argument:
 
-```bash
-./mp2 data/h2o.h5
-```
