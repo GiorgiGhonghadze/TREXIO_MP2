@@ -2,6 +2,8 @@
 
 C program for computing the closed-shell restricted Hartree-Fock (RHF) energy and the second-order Møller–Plesset (MP2) correlation energy from the data stored in TREXIO format.
 
+[Overview](#overview) • [Installation](INSTALL.md)
+
 ## Overview
 
 The program reads precomputed molecular orbital (MO) integrals and orbital energies from a TREXIO file (`.h5`) and performs the following steps:
