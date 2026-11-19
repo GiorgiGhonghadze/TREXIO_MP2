@@ -4,7 +4,7 @@ C program for computing the closed-shell restricted Hartree-Fock (RHF) energy an
 
 <div align="center">
    
-[Overview](#overview) • [Compilation](INSTALL.md) • [Authors](AUTHORS)
+[Overview](#overview)  •  [Compilation](INSTALL.md)  •  [Authors](AUTHORS)
 </div>
 
 ## Overview
