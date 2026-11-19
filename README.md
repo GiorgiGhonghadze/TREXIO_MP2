@@ -10,22 +10,24 @@ The program reads pre-computed molecular orbital (MO) integrals and orbital ener
 2. **Symmetry Expansion:** Unpacks the sparse two-electron integrals in physicist's notation into a dense 4D tensor by applying 8-fold permutational symmetry:
    $$\langle ij|kl\rangle = \langle il|kj\rangle = \langle kl|ij\rangle = \langle kj|il\rangle = \langle ji|lk\rangle = \langle li|jk\rangle = \langle lk|ji\rangle = \langle jk|li\rangle$$
 3. **Hartree-Fock Energy:** Evaluates the closed-shell spatial-orbital RHF energy:
-   $$E_{\text{HF}} = E_{NN} + 2\sum_{i=1}^{N_{\text{occ}}} \langle i|h|i\rangle + \sum_{i=1}^{N_{\text{occ}}}\sum_{j=1}^{N_{\text{occ}}} \left[ 2\langle ij|ij\rangle - \langle ij|ji\rangle \right]$$
-4. **MP2 Correlation Energy:** Computes the second-order perturbation energy correction using canonical Fock eigenvalues:
-   $$E_{\text{MP2}} = \sum_{i,j \in \text{occ}} \sum_{a,b \in \text{virt}} \frac{\langle ij|ab\rangle \left(2\langle ij|ab\rangle - \langle ij|ba\rangle\right)}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b}$$
+
+$$E_{\text{HF}} = E_{NN} + 2\sum_{i=1}^{N_{\text{occ}}} \langle i|h|i\rangle + \sum_{i=1}^{N_{\text{occ}}}\sum_{j=1}^{N_{\text{occ}}} \left[ 2\langle ij|ij\rangle - \langle ij|ji\rangle \right]$$
+   
+5. **MP2 Correlation Energy:** Computes the second-order perturbation energy correction using canonical Fock eigenvalues:
+
+$$E_{\text{MP2}} = \sum_{i,j \in \text{occ}} \sum_{a,b \in \text{virt}} \frac{\langle ij|ab\rangle \left(2\langle ij|ab\rangle - \langle ij|ba\rangle\right)}{\epsilon_i + \epsilon_j - \epsilon_a - \epsilon_b}$$
 
 ## Repository Structure
 
 ```text
 .
 ├── AUTHORS          # List of project contributors
-├── INSTALL.md       # Dependency setup, compilation, and execution instructions
+├── INSTALL.md       # Compilation instructions
 ├── LICENSE          # Project license information
-├── README.md        # Project summary, theory overview, and benchmark results
+├── README.md        # Project summary and benchmark results
 ├── data/            # Sample TREXIO molecular input files
-├── doc/             # Additional theoretical or implementation documentation
-├── src/             # C source code (mp2.c)
-└── tests/           # Automated validation tests
+├── src/             # C source code
+└── tests/           # Validation tests
 ```
 
 ## Computed Benchmark Results
